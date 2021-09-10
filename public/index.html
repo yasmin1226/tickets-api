@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <form action="" id="log-form">
+       
+        email <input type="email" name="email">
+    
+    <br>
+    password <input type="password" name="password">
+    <br>
+   
+    <button type="submit">logIn</button>
+    </form>
+
+    <script>
+const form=document.getElementById("log-form");
+form.addEventListener("submit",(e)=>{
+    e.preventDefault();
+   // const name=e.target.elements.name.value;
+    const email=e.target.elements.email.value;
+
+    const password=e.target.elements.password.value;
+
+//    const confirmPass=e.target.elements.confirmPass.value;
+
+
+var myHeaders = new Headers();
+myHeaders.append("Content-Type", "application/json");
+
+var raw = JSON.stringify({email,password});
+
+var requestOptions = {
+  method: 'POST',
+  headers: myHeaders,
+  body: raw,
+  redirect: 'follow'
+};
+
+fetch("http://localhost:50000/api/users/login", requestOptions)
+  .then(response => response.text())
+  .then(result => console.log(result))
+  .catch(error => console.log('error', error));
+})
+        </script>
+</body>
+</html>
