@@ -59,35 +59,25 @@ module.exports = (err, req, res, next) => {
   err.statusCode = err.statusCode || 500;
   err.status = err.status || "error";
   if (process.env.NODE_ENV === "development") {
-    //  console.log("is develop");
+    console.log("is develop");
 
     sendErrorDev(err, res);
   } else if (process.env.NODE_ENV === "production") {
-    //console.log("Errpro", err.name);
-    //console.log("err-prod");
-    // console.log(err.name);
-
-    // let error = { ...err };
+    console.log("is prod");
+    console.log("error", err);
     let error = err;
-    // console.log("erroee", error);
 
     if (error.name === "CastError") {
       error = handleCastErrorDB(error);
     }
     if (error.code === 11000) {
-      //console.log("err", error);
-
       error = handleDuplicateFieldsDB(error);
     }
     if (error.name === "ValidationError") {
-      // console.log("validation error");
       error = handleValidationErrorDB(error);
     }
-    // console.log(err.name);
-    // console.log("false");
 
     if (error.name === "JsonWebTokenError") {
-      //   console.log("error is JsonWebTokenError");
       error = handleJWTError();
     }
     if (error.name === "TokenExpiredError") {
@@ -96,10 +86,6 @@ module.exports = (err, req, res, next) => {
 
     sendErrorProd(error, res);
   }
-  // else {
-  //   console.log("false");
-  //   console.log(process.env.NODE_ENV);
-  //   console.log(err.name);
-  // }
+
   next();
 };

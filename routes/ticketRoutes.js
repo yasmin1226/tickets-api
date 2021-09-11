@@ -12,7 +12,7 @@ const replyRouter = require("../routes/replyRoutes");
 //router.post("/:ticketId/reply", userAuth, replyController.createReply);
 
 //router.get("/:ticketId/reply");
-router.use("/:ticketId/reply", replyRouter);
+// router.use("/:ticketId/reply", replyRouter);
 router.get(
   "/myTickets",
   authenticatoinController.protect,
@@ -48,7 +48,7 @@ router
   )
   .delete(
     authenticatoinController.protect,
-    authenticatoinController.restrictTo("admin"),
+    authenticatoinController.restrictTo("customer"),
     ticketController.deleteTicket
   );
 module.exports = router;
